@@ -92,7 +92,7 @@ class GNSSManager:
             print(TAG, 'Connection is not open.')
             return False
         
-    def send_settings(self, settings : list[str]) -> None:
+    def send_settings(self, settings : list) -> None:
         for setting in settings:
             self.send_setting(setting)
         
