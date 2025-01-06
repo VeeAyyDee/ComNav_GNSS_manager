@@ -16,13 +16,16 @@ class GNSSManager:
         # the thing is likely to be in 115200 or 921600, others are set in the order of likeliness to be a thing
         self.baudrates = [115200, 921600, 57600, 38400, 19200, 9600, 230400, 460800, 4800, 1200] 
 
-    def connect(self) -> bool:
+    def connect(self, override_check=False) -> bool:
         
         try:
             self.serial_connection = serial.Serial(self.port, self.baudrate, timeout=self.timeout)
             print(TAG, f'Connecting to {self.port} at {self.baudrate} baud...', end='')
             self.running = True
             threading.Thread(target=self.read_serial, daemon=True).start()
+
+            if (override_check):
+                return True
             
             if not self.check_connection(timeout = 3):
                 print()
